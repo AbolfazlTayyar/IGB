@@ -1,0 +1,25 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model AddVM
+@inject UserManager<Patient> UserManager;
+@{
+	ViewData["Title"] = "Home Page";
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+	<form asp-action="Create">
+		<div class="col-md-6">
+			<div class="mb-3">
+				<input asp-for="PatientId" class="form-control" readonly value="@UserManager.GetUserId(User)"/>
+			</div>
+			<div class="mb-3">
+				<select asp-for="ServiceIds" class="form-select" asp-items="ViewBag.Services" multiple></select>
+			</div>
+		</div>
+		<input type="submit" value="Add Services" class="btn btn-outline-success" />
+	</form>
+}
+else
+{
+	<h1>you have to login first</h1>
+}
